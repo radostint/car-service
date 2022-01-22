@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Users</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+        <link rel="stylesheet" href="../css/shards.min.css">
+        <link th:href="@{/style.css}" rel="stylesheet" />
+    </head>
+    <body>
+        <div th:replace="fragments/navbar :: navbar"></div>
+        <div class="container my-5">
+            <div class="row justify-content-center">
+                <div class="col-md-12">
+                    <div th:if="${#lists.isEmpty(vehicles)}">
+                        <h2 style="float:left;">No vehicles yet!</h2>
+                        <p sec:authorize="hasRole('ROLE_ADMIN')"><a th:href="@{/user/{id}/vehicles/add(id=${userId})}" class="btn btn-theme-dark"><i class="fas fa-user-plus"></i></a></p>
+                    </div>
+                    <div th:if="${not #lists.isEmpty(vehicles)}">
+                        <h2 style="float: left;" th:text="${vehicles[0].user.firstName + ' ' + vehicles[0].user.lastName + ' - ' + vehicles[0].user.phoneNumber}" sec:authorize="hasRole('ROLE_ADMIN')">Vehicles</h2>
+                        <h2 style="float: left;" sec:authorize="hasRole('ROLE_USER')">My Vehicles</h2>
+                        <p style="float: right;" sec:authorize="hasRole('ROLE_ADMIN')"><a th:href="@{/user/{id}/vehicles/add(id=${userId})}" class="btn btn-theme-dark"><i class="fas fa-car"></i> Add New</a></p>
+                        <table class="table table-hover table-responsive-md">
+                            <thead style="background-color: #212529;color: #fd7e14">
+                                <tr>
+                                    <!--<th>ID</th>-->
+                                    <th>Vehicle</th>
+                                    <th>Registration plate</th>
+                                    <th>Type</th>
+                                    <th style="text-align: center" sec:authorize="hasRole('ROLE_ADMIN')">Actions</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="vehicle : ${vehicles}">
+                                    <!--<td th:text="${vehicle.vehId}"></td>-->
+                                    <td><a th:href="@{/vehicle/{id}/visits(id=${vehicle.vehId})}" th:text="${vehicle.make + ' ' + vehicle.model}" style="color: #dd6400"></a></td>
+                                    <td th:text="${vehicle.regplate}"></td>
+                                    <td th:text="${#strings.capitalize(vehicle.type.name)}" ></td>
+                                    <td style="text-align: center" sec:authorize="hasRole('ROLE_ADMIN')">
+                                        <a th:href="@{/vehicle/edit/{id}(id=${vehicle.vehId})}" class="btn btn-theme"><i class="fas fa-car"></i> Edit</a>
+                                        <a th:href="@{/vehicle/delete/{id}(id=${vehicle.vehId})}" class="btn btn-danger" 
+                                           th:data-confirm-delete="|Are you sure you want to delete vehicle: ${vehicle.make} ${vehicle.model} - ${vehicle.regplate}?|"
+                                           onclick="if (!confirm(this.getAttribute('data-confirm-delete')))
+                                                       return false"><i class="fas fa-trash-alt"></i> Delete</a></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>      
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

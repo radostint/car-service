@@ -1,0 +1,58 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:tiles="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Login</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+        <link rel="stylesheet" href="css/shards.min.css">
+        <link rel="stylesheet" href="css/login.css">
+        <link th:href="@{/style.css}" rel="stylesheet" />
+    </head>
+    <body>
+        <div th:replace="fragments/navbar :: navbar"></div>
+
+
+        <div class="row d-flex justify-content-center mt-5">
+            <div class="col-sm-3">
+                <div tiles:fragment="content" class="card">
+                    <div class="card-body">
+                        <h4 class="card-title text-center mb-4 mt-1">Sign in</h4>
+                        <hr>
+                        <div th:if="${param.error}" class="alert alert-danger">    
+                            Invalid username and/or password.
+                        </div>
+                        <div th:if="${param.logout}" class="alert alert-success"> 
+                            You have been logged out.
+                        </div>
+                        <form name="f" th:action="@{/login}" method="post">
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"> <i class="fa fa-user"></i> </span>
+                                    </div>
+                                    <input class="form-control" type="text" id="username" name="username" placeholder="Username"/>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
+                                    </div>
+                                    <input class="form-control" type="password" id="password" name="password" placeholder="*******"/> 
+                                </div></div>
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-theme btn-block"> Login  </button>
+                            </div>
+                            <div class="form-group"><span>Don't have an account yet?</span>
+                                <a th:href="@{/register}">  Register here.  </a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

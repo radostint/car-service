@@ -1,0 +1,5 @@
+----------0.Sort visits array by date
+----------1.Profile & My Cars
+----------2.Mechanics
+3.Moje da se preorganizira strukturata na prilojenieto, vsichko da e v otdelni packages
+4.Word file

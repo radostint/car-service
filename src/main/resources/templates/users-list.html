@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Users</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+        <link rel="stylesheet" href="../css/shards.min.css">
+        <link th:href="@{/style.css}" rel="stylesheet" />
+    </head>
+    <body>
+        <div th:replace="fragments/navbar :: navbar"></div>
+        <div th:switch="${users}" class="container my-5">
+            <div class="row mb-3">
+                <div class="col-md-12">
+                    <form class="form-inline my-2 my-lg-0 float-right" action="#" th:action="@{/search-user}" method="get">
+                        <input class="form-control mr-sm-2 search" type="search" name="phoneNumber" placeholder="Search by phone number" aria-label="Search">
+                        <button class="btn btn-outline-theme my-2 my-sm-0" type="submit">Search</button>
+                    </form>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <h2 th:case="0" th:if="${error == null}">No customers yet!</h2>
+                    <div th:if="${error != null}">
+                        <h2>Oops!</h2>
+                        <h3 th:text="${error}"></h3>
+                    </div>
+                    <div th:case="*">
+                        <h2 style="float: left;">Customers</h2>
+                        <p style="float: right;"><a th:href="@{/users/add}" class="btn btn-theme-dark"><i class="fas fa-user-plus"></i> Add New</a></p>
+                        <table class="table table-hover table-responsive-md">
+                            <thead style="background-color: #212529;color: #fd7e14">
+                                <tr>
+                                    <!--<th>ID</th>-->
+                                    <th>Name</th>
+                                    <th>Username</th>
+                                    <th>Phone Number</th>
+                                    <th style="text-align: center">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="user : ${users}">
+                                    <!--<td th:text="${user.id}"></td>-->
+                                    <td style="color: #dd6400"><a th:href="@{/user/{id}/vehicles(id=${user.id})}" th:text="${user.firstName + ' ' + user.lastName}" style="color: #dd6400"></a></td>
+                                    <td th:text="${user.username}"></td>
+                                    <td th:text="${user.phoneNumber}"></td>
+                                    <td style="text-align: center">
+                                        <a th:href="@{/user/{id}/vehicles(id=${user.id})}" class="btn btn-theme-dark"><i class="fas fa-car"></i> Vehicles</a>
+                                        <a th:href="@{/user/edit/{id}(id=${user.id})}" class="btn btn-theme"><i class="fas fa-user-edit"></i> Edit</a>
+                                        <a th:href="@{/user/delete/{id}(id=${user.id})}" class="btn btn-danger"
+                                           th:data-confirm-delete="|Deleting this user will aslo delete all their vehicles and their corresponding visits if any! Are you sure you want to delete user: ${user.username}?|"
+                                           onclick="if (!confirm(this.getAttribute('data-confirm-delete')))
+                                                       return false"><i class="fas fa-trash-alt"></i> Delete</a></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>      
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

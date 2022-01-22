@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Update Vehicle</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+        <link rel="stylesheet" href="../css/shards.min.css">
+        <link th:href="@{/style.css}" rel="stylesheet" />
+    </head>
+    <body>
+        <div th:replace="fragments/navbar :: navbar"></div>
+        <div class="container my-5">
+            <div class="row d-flex justify-content-center">
+                <h2 class="mb-1">Update Vehicle</h2>
+            </div>
+            <div class="row d-flex justify-content-center">
+                <div class="col-md-6">
+                    <form action="#" th:action="@{/vehicle/update/{id}(id=${vehicle.vehId})}" th:object="${vehicle}" method="post">
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                <label for="make" class="col-form-label">Make</label>
+                                <input type="text" th:field="*{make}" class="form-control" id="make" placeholder="Make">
+                                <span th:if="${#fields.hasErrors('make')}" th:errors="*{make}" class="text-danger"></span>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="model" class="col-form-label">Model</label>
+                                <input type="text" th:field="*{model}" class="form-control" id="model" placeholder="Model">
+                                <span th:if="${#fields.hasErrors('model')}" th:errors="*{model}" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                <label for="regplate" class="col-form-label">Registration plate</label>
+                                <input type="text" th:field="*{regplate}" class="form-control" id="regplate" placeholder="Regplate">
+                                <span th:if="${#fields.hasErrors('regplate')}" th:errors="*{regplate}" class="text-danger"></span>
+                                <span th:if="${duplicateRegplate != null}" th:text="${duplicateRegplate}" class="text-danger"></span>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="type" class="col-form-label">Vehicle Type</label>
+                                <select th:field="*{type}" class="form-control">
+                                    <option th:each="type : ${types}" th:value="${type.id}" th:text="${#strings.capitalize(type.name)}">
+                                    </option>
+                                </select>
+                            </div>
+                            <input type="text" th:field="*{user}" th:value="${userId}" name="user" style="display:none;">
+                        </div>
+                        <div class="row">  
+                            <div class="col-md-12 text-center">
+                                <button type="submit" class="btn btn-theme"><i class="fas fa-plus"></i> Update Vehicle</button>
+                            </div>
+                        </div>    
+                    </form>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

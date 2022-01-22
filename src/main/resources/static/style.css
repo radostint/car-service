@@ -1,0 +1,67 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;800&display=swap');
+body{
+    font-family: 'Montserrat';
+}
+nav{
+    font-weight: 800;
+}
+nav.bg-dark {
+    background-color: #212529 !important;
+}
+nav i{
+    color: white;
+}
+nav i:hover {
+    color: #fd7e14;
+    transition: all 0.3s ease;
+}
+table{
+    background-color: white !important;
+}
+h2{
+    font-weight: bold;
+}
+.btn-theme{
+    color:#212529;
+    background-color:#fd7e14;
+    border-color:#fd7e14;
+}
+.btn-theme:hover{
+    color:#fff;
+    background-color:#0069d9;
+    border-color:#0062cc
+}
+.btn-theme.focus,
+.btn-theme:focus{
+    box-shadow:0 0 0 .2rem rgba(0,123,255,.5)
+}
+
+.btn-theme-dark{
+    color:#fd7e14;
+    background-color:#212529;
+    border-color:#212529;
+}
+.btn-theme-dark:hover{
+    color:#fff;
+    background-color:#0069d9;
+    border-color:#0062cc
+}
+.btn-theme-dark.focus,
+.btn-theme-dark:focus{
+    box-shadow:0 0 0 .2rem rgba(0,123,255,.5)
+}
+
+.btn-outline-theme{
+    color:#fd7e14;
+    background-color:transparent;
+    background-image:none;
+    border-color:#212529
+}
+.btn-outline-theme:hover{
+    color:#fd7e14;
+    background-color:#212529;
+    border-color:#212529
+}
+.search{
+    width:250px !important;
+}
